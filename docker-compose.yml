@@ -11,7 +11,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       PGDATA: /data/postgres
     ports:
-      - "5432:5432"
+      - "5433:5433"
+    command: -p 5433
     networks:
       - transactions-network
     restart: unless-stopped
@@ -21,7 +22,7 @@ services:
     image: flyway/flyway:9.7.0
     environment:
       - FLYWAY_EDITION=community
-    command: -url=jdbc:postgresql://clients-database:5432/postgres -schemas=${POSTGRES_DB} -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -connectRetries=50 migrate
+    command: -url=jdbc:postgresql://clients-database:5433/${POSTGRES_DB} -schemas=${POSTGRES_DB} -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -connectRetries=50 migrate
     volumes:
       - ./migrations:/flyway/sql
     depends_on:
