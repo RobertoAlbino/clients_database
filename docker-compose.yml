@@ -14,7 +14,7 @@ services:
       - "5433:5433"
     command: -p 5433
     networks:
-      - transactions-network
+      - pismo-network
     restart: unless-stopped
   
   clients-flyway:
@@ -28,8 +28,8 @@ services:
     depends_on:
       - clients-database
     networks:
-      - transactions-network
+      - pismo-network
 
 networks:
-  transactions-network:
-    driver: bridge
+  pismo-network:
+    external: true
